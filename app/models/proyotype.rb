@@ -1,0 +1,2 @@
+class Proyotype < ApplicationRecord
+end
