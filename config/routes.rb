@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
+  get 'items/index'
   get 'prototypes/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
   # root "articles#index"
-  root to: "prototypes#index"
-  resources :prototypes, only: :index
+  root to: "items#index"
+ 
 
 end
