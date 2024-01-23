@@ -1,2 +1,20 @@
-<h1>Items#index</h1>
-<p>Find me in app/views/items/index.html.erb</p>
+<div class="main">
+  <div class="inner">
+    <%# ログインしているときは以下を表示する %>
+    <% if user_signed_in?  %>
+     <div class="greeting"> 
+       <%= "こんにちは、" %>
+        <%# <%= link_to '投稿ページ', '/posts/new'%>
+        <%= link_to "#{current_user.nickname}さん", root_path, class: :greeting__link%> 
+       </div> 
+      <% end %>
+    <%# // ログインしているときは上記を表示する %>
+    <div class="card__wrapper">
+      <%# 投稿機能実装後、部分テンプレートでプロトタイプ投稿一覧を表示する %>
+      <%#= render partial: "item", collection: @items %>
+    </div>
+    
+  </div>
+</div>
+
+
