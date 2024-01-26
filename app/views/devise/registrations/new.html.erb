@@ -1,8 +1,5 @@
-<%= render "shared/header"%>
-
-
+<%= render "shared/second-header"%>
 <%= form_with model: @user, url: user_registration_path, class: 'registration-main', local: true do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
 
 <div class="form-wrap">
   <div class='form-header'>
@@ -10,6 +7,8 @@
       会員情報入力
     </h1>
   </div>
+
+    <%= render 'shared/error_messages',  model: f.object %>
 
     <div class='form-group'>
       <div class='form-text-wrap'>
