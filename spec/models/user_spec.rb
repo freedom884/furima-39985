@@ -91,28 +91,23 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("First name is invalid")
       end 
-      it '名前が漢字・平仮名・片仮名以外だと登録出来ない' do
-        @user.first_name = '1234'
-        @user.valid?
-        expect(@user.errors.full_messages).to include('First name is invalid')
-
-        @user.first_name = '@#$%'
-        @user.valid?
-        expect(@user.errors.full_messages).to include('First name is invalid')
-      end
-      it '名前が片仮名以外だと登録出来ない' do
+      
+      it '名前が漢字だと登録できない'do
         @user.family_name_kana = '山田' # 漢字を含む
         @user.valid?
         expect(@user.errors.full_messages).to include('Family name kana is invalid')
-  
-        @user.family_name_kana = 'yamada' # 平仮名を含む
+      end
+      it '名前が平仮名だと登録できない'do
+        @user.family_name_kana = 'やまだ' # 平仮名を含む
         @user.valid?
         expect(@user.errors.full_messages).to include('Family name kana is invalid')
-  
+      end
+      it '名前が数字だと登録できない'do
         @user.family_name_kana = '1234' # 数字を含む
         @user.valid?
         expect(@user.errors.full_messages).to include('Family name kana is invalid')
-  
+      end
+      it '名前が特殊文字だと登録できない'do
         @user.family_name_kana = '@#$%' # 特殊文字を含む
         @user.valid?
         expect(@user.errors.full_messages).to include('Family name kana is invalid')
