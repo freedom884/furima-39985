@@ -18,6 +18,6 @@ class ItemsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:content, :image,:genre_id).merge(user_id: current_user.id,)
+    params.require(:product).permit(:content, :image,:genre_id,:status_id).merge(user_id: current_user.id,)
   end
 end
