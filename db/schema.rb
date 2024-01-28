@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_23_073303) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_28_105804) do
+  create_table "products", charset: "utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.integer "category_id", null: false
+    t.integer "condition_id", null: false
+    t.integer "shipping_fee_id", null: false
+    t.integer "days_to_ship_id", null: false
+    t.integer "origin_region_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_products_on_user_id"
+  end
+
   create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "nickname", null: false
     t.string "email", null: false
@@ -29,4 +43,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_23_073303) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "products", "users"
 end
