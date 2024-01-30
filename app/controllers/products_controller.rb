@@ -1,4 +1,4 @@
-class ItemsController < ApplicationController
+class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
 
   def index
@@ -15,7 +15,7 @@ class ItemsController < ApplicationController
     if @product.save
       redirect_to root_path
     else
-      render :new
+      render :new , status: :unprocessable_entity
     end
   end
   

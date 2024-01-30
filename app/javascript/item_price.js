@@ -1,7 +1,7 @@
-window.addEventListener('load', () => {
+window.addEventListener('load',function () {
   const priceInput = document.getElementById("item-price");
 priceInput.addEventListener("input", () => {
-  const inputValue = parseFloat(priceInput.value);
+  const inputValue = priceInput.value;
   const addTaxDom = document.getElementById("add-tax-price");
   const ProfitDom = document.getElementById("profit");
 
@@ -9,5 +9,5 @@ priceInput.addEventListener("input", () => {
   ProfitDom.innerHTML = inputValue - parseFloat(addTaxDom.innerHTML);
 
 
-})
+  });
 });
