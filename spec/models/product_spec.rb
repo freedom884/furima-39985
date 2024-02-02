@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Product, type: :model do
   before do
-    @user = FactoryBot.create(:user)
-    @product = FactoryBot.build(:product, user: @user)
+    @product = FactoryBot.build(:product)
   end
 
   describe '出品する' do
@@ -44,11 +43,14 @@ RSpec.describe Product, type: :model do
 
     context '出品ができないとき' do
       it 'ユーザー登録している人でないと出品できない' do
+        @product.user = nil
+        @product.valid?
+        expect(@product.errors.full_messages).to include("User must exist")
       end
-      it '画像が空だと出品できない' do
-      @product.image = nil
-      @product.valid?
-       expect(@product.errors.full_messages).to include ("Image can't be blank") 
+        it '画像が空だと出品できない' do
+        @product.image = nil
+        @product.valid?
+        expect(@product.errors.full_messages).to include ("Image can't be blank") 
       end
       it '商品名が空欄だと出品できない' do
           @product.name = ''

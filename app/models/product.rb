@@ -10,7 +10,7 @@ class Product < ApplicationRecord
 
   belongs_to :user
   has_one_attached :image
-  has_one :purchase
+
 
   validates :name , presence: true
   validates :image, presence: true
@@ -20,7 +20,7 @@ class Product < ApplicationRecord
   validates :shippingfee_id, numericality: { other_than: 0 , message: "can't be blank"}
   validates :prefecture_id, numericality: { other_than: 0 , message: "can't be blank"}
   validates :scheduleddelivery_id, numericality: { other_than: 0 , message: "can't be blank"}
-  validates :price, presence: true, format: { with: /\A[0-9]+\z/, message: "Half-width number" }, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
+  validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
   
   with_options presence: true, numericality: { other_than: 0, message: 'Select'} do
    
