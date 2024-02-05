@@ -1,8 +1,8 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
 
-  def index
-    
+  def index 
+    @products = Product.all
   end
 
   def new
@@ -16,6 +16,12 @@ class ProductsController < ApplicationController
     else
       render :new , status: :unprocessable_entity
     end
+  end
+
+  def show
+  end
+
+  def edit
   end
   
   private

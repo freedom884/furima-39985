@@ -24,6 +24,9 @@ class Product < ApplicationRecord
   
   with_options presence: true, numericality: { other_than: 0, message: 'Select'} do
    
+    
+
+
   end
 
 end
