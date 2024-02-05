@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
 
   def index 
-    @products = Product.all
+    @products = Product.all.order(created_at: :desc)
   end
 
   def new
