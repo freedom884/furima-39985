@@ -3,12 +3,13 @@
 <%# 商品の概要 %>
 <div class="item-show">
   <div class="item-box">
+  
     <h2 class="name">
       <%= "商品名" %>
     </h2>
     <div class="item-img-content">
       <%= image_tag ("item-sample.png" ,onerror: "this.onerror=null; this.src='app/assets/images/item_sample.png';") %>class:"item-box-img" %>
-    
+      
       <%# 商品が売れている場合は、sold outを表示しましょう %>
       <div class="sold-out">
         <span>Sold Out!!</span>
