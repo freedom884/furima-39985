@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index,:show]
   before_action :set_product, only: [:show, :edit, :update, :move_to_index, :destroy]
-  before_action :require_same_user, only: [:edit, :move_to_index,:destroy]
+  before_action :require_same_user, only: [:edit, :destroy]
 
 
   def index 
@@ -36,8 +36,7 @@ class ProductsController < ApplicationController
     end
   end
   
-  def move_to_index
-  end
+  
 
   def destroy
     if @product.destroy
