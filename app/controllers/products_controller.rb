@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index,:show]
-  before_action :set_product, only: [:show,:edit,:update、:move_to_index]
+  before_action :set_product, only: [:show, :edit, :update, :move_to_index]
   before_action :require_same_user, only: [:edit, :move_to_index]
 
 
@@ -53,6 +53,7 @@ class ProductsController < ApplicationController
     unless current_user.id == @product.user_id
       redirect_to root_path
     end
+  end
  
 
 end
