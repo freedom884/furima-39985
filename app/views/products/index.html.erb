@@ -135,11 +135,13 @@
           <%= image_tag product.image, class: "item-img" if product.image.attached? %>
 
           <%# 商品が売れていればsold outを表示しましょう %>
-        
+        <% if （ここに条件文） %>
+  
           <div class='sold-out'>
             <span>Sold Out!!</span>
           </div>
           
+        <% end %>
           <%# //商品が売れていればsold outを表示しましょう %>
 
         </div>

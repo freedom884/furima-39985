@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   root to: "products#index"
 
-  resources :products, only: [:index, :new, :create, :show, :edit,:update, :destroy]
-  resources :orders, only: [:index] 
+  resources :products do
+    resources :orders, controller: 'orders'
+  end 
 end
