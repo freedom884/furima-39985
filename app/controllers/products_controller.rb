@@ -46,11 +46,15 @@ class ProductsController < ApplicationController
     end
   end
 
+
+
+
   private
 
   def product_params
-    params.require(:product).permit(:name, :description, :image,:category_id ,:condition_id,:shippingfee_id,:prefecture_id,:scheduleddelivery_id,:price).merge(user_id: current_user.id,)
+    params.require(:product).permit(:name, :description, :image,:category_id ,:condition_id,:shippingfee_id,:prefecture_id,:scheduleddelivery_id,:price).merge(user_id: current_user.id)
   end
+
 
   def set_product
     @product = Product.find(params[:id])
@@ -58,6 +62,12 @@ class ProductsController < ApplicationController
 
   def require_same_user
     unless current_user.id == @product.user_id
+      redirect_to root_path
+    end
+  end
+
+  def sold_edit
+    if @product.sold_out.present?
       redirect_to root_path
     end
   end

@@ -9,5 +9,6 @@ Rails.application.routes.draw do
 
   resources :products do
     resources :orders, controller: 'orders'
-  end 
+  end
+  resources :payments, only:[:pay_item]
 end
