@@ -2,6 +2,7 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index,:show]
   before_action :set_product, only: [:show, :edit, :update, :move_to_index, :destroy]
   before_action :require_same_user, only: [:edit, :destroy]
+  
 
 
   def index 
@@ -25,6 +26,9 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    if @product.user_id != current_user.id || @product.order != nil #　コードを追加
+      redirect_to root_path
+    end
   end
 
   def update
@@ -60,6 +64,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
   end
 
+  
   def require_same_user
     unless current_user.id == @product.user_id
       redirect_to root_path
@@ -67,10 +72,11 @@ class ProductsController < ApplicationController
   end
 
   def sold_edit
-    if @product.sold_out.present?
+    if @product.order.present?
       redirect_to root_path
     end
   end
+
  
 
 end

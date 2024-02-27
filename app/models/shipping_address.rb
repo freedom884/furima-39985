@@ -8,9 +8,9 @@ class ShippingAddress
   validates :prefecture_id , numericality: { other_than: 0 , message: "can't be blank"}
   validates :city
   validates :house_number
-  validates :phone_number, presence: true
-  validates :phone_number, length: { in: 10..11, message: "は10桁以上11桁以内で入力してください" }
-  validates :phone_number, numericality: { only_integer: true, message: "は半角数値のみ入力してください" }
+  validates :phone_number, presence: { message: "を入力してください" }
+  validates :phone_number, length: { in: 10..11, message: "は10桁以上11桁以内で入力してください" }, if: -> { phone_number.present? }
+  validates :phone_number, numericality: { only_integer: true, message: "は半角数値のみ入力してください" }, if: -> { phone_number.present? }
   end
 
 
