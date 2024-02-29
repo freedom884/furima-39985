@@ -74,6 +74,8 @@ RSpec.describe ShippingAddress, type: :model do
           @shipping_address.valid?
           expect(@shipping_address.errors.full_messages).to include("Phone number can't be blank")
       end
+
+
       it '電話番号にハイフンがあると保存できないこと' do
         @shipping_address.phone_number='090-12345678'
         @shipping_address.valid?
