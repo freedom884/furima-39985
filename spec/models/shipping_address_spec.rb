@@ -87,10 +87,25 @@ RSpec.describe ShippingAddress, type: :model do
         @shipping_address.valid?
         expect(@shipping_address.errors.full_messages).to include('Phone number は10桁以上11桁以内で入力してください')
       end
+      it '電話番号が9桁以下だと保存できないこと' do
+        @shipping_address.phone_number= '123456789'
+        @shipping_address.valid?
+        expect(@shipping_address.errors.full_messages).to include("Phone number は10桁以上11桁以内で入力してください")
+      end
       it 'tokenが空だと購入できない' do
         @shipping_address.token = ''
         @shipping_address.valid?
         expect(@shipping_address.errors.full_messages).to include("Token can't be blank")
+      end
+      it 'userが紐付いていなければ購入できない' do
+        @shipping_address.user_id = nil
+        @shipping_address.valid?
+        expect(@shipping_address.errors.full_messages).to include("User can't be blank")
+      end
+      it 'productが紐付いていなければ購入できない' do
+        @shipping_address.product_id = nil
+        @shipping_address.valid?
+        expect(@shipping_address.errors.full_messages).to include("Product can't be blank")
       end
     end
   end
