@@ -1,15 +1,17 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_product, only: [:index, :create]
+  before_action :sold?, only: [:create]
   
 
   def index 
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-    @order = Order.new
     @shipping_address = ShippingAddress.new
-    if current_user == @product.user 
+    if (user_signed_in? && current_user.id == @product.user_id) || @product.order.present?
       redirect_to root_path
+    else user_signed_in? == false
+      redirect_to new_user_session_path 
     end
+
   end
 
   def new
@@ -19,14 +21,14 @@ class OrdersController < ApplicationController
   def create
     @shipping_address= ShippingAddress.new(order_params)
     @order = Order.new(product_id: @product.id, user_id: current_user.id)
+     
     if @shipping_address.valid?
       pay_item
       @shipping_address.save
-      redirect_to root_path, notice: '購入が完了しました。'
+      redirect_to root_path
     else
       render :index
-    end
-      
+    end    
   end
 
 
@@ -51,19 +53,13 @@ class OrdersController < ApplicationController
     )
   end
   
-  def sold
-    @product = Product.find(params[:product_id])
-    if @product.order.present?
+  def sold?
+    if (user_signed_in? && current_user.id == @product.user_id) || @product.order.present?
       redirect_to root_path
+    elsif user_signed_in? == false
+      redirect_to new_user_session_path 
     end
   end
-
-  def items_user
-    if current_user.id == @product.user.id
-      redirect_to root_path
-    end
-  end
-
-
-
+  
 end
+

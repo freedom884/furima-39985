@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Address, type: :model do
     before do
-      @order = create(:order)  # FactoryBotを使用してOrderを作成
-      @address = build(:address, order: @order)
+      @user = FactoryBot.create(:user)
+      @Product = FactoryBot.create(:Product)
+      @address = FactoryBot.build(:address, user_id: @user.id, product_id: @product.id)
     end
   describe '配送先情報の保存' do
     context '配送先情報の保存ができるとき' do
@@ -100,7 +101,11 @@ RSpec.describe Address, type: :model do
         @address.valid?
         expect(@address.errors.full_messages).to include('Phone number is invalid')
       end
-      
+      it 'tokenが空だと購入できない' do
+        @address.token = ''
+        @address.valid?
+        expect(@address.errors.full_messages).to include("Token can't be blank")
+      end
     end
   end
 

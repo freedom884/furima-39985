@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe ShippingAddress, type: :model do
-
   before do
-    @shipping_address = FactoryBot.build(:shipping_address)
-  end
-  
+      @user = FactoryBot.create(:user)
+      @product = FactoryBot.create(:product, user: @user)
+      @shipping_address = FactoryBot.build(:shipping_address, user_id: @user.id, product_id: @product.id)
+   end  
 
   describe '配送先情報の保存' do
+
     context '配送先の情報の保存がうまくいくとき' do
       it '郵便番号、住所（都道府県、市町村、番地）、電話番号、購入ユーザーid、購入商品id、トークンが存在すれば登録できる' do
         expect(@shipping_address).to be_valid 
@@ -17,11 +18,11 @@ RSpec.describe ShippingAddress, type: :model do
           expect(@shipping_address).to be_valid
       end
       it '都道府県が「---」以外かつ空でなければ保存できる' do
-        @shipping_address = build(:shipping_address, prefecture_id: 1)
+        @shipping_address.prefecture_id = 1
         expect(@shipping_address).to be_valid
       end
       it '市区町村が空でなければ保存できる' do
-          @shipping_address.city ='横浜市'
+          @shipping_address.city = '横浜市'
           expect(@shipping_address).to be_valid
       end
       it '番地が空でなければ保存できる' do
@@ -86,8 +87,11 @@ RSpec.describe ShippingAddress, type: :model do
         @shipping_address.valid?
         expect(@shipping_address.errors.full_messages).to include('Phone number は10桁以上11桁以内で入力してください')
       end
+      it 'tokenが空だと購入できない' do
+        @shipping_address.token = ''
+        @shipping_address.valid?
+        expect(@shipping_address.errors.full_messages).to include("Token can't be blank")
+      end
     end
   end
 end
-
-  

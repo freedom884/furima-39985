@@ -12,6 +12,9 @@ class ShippingAddress
   presence: {message: "can't be blank"},
   length: { in: 10..11, message: "は10桁以上11桁以内で入力してください" , if: -> { phone_number.present? }},
   numericality: { only_integer: true, message: "は半角数値のみ入力してください" , if: -> { phone_number.present? }}
+  validates :user_id
+  validates :product_id
+  validates :token
   end
 
 
