@@ -5,6 +5,7 @@ class OrdersController < ApplicationController
   
 
   def index
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @shipping_address = ShippingAddress.new
     if user_signed_in?
       if current_user.id == @product.user_id || @product.order.present?
@@ -46,7 +47,7 @@ class OrdersController < ApplicationController
 
 
   def pay_item
-    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
       amount: @product.price,       # 商品の値段
       card: order_params[:token], # カードトークン
