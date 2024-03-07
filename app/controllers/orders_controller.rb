@@ -4,14 +4,15 @@ class OrdersController < ApplicationController
   before_action :sold?, only: [:create]
   
 
-  def index 
+  def index
     @shipping_address = ShippingAddress.new
-    if (user_signed_in? && current_user.id == @product.user_id) || @product.order.present?
-      redirect_to root_path
-    else user_signed_in? == false
-      redirect_to new_user_session_path 
+    if user_signed_in?
+      if current_user.id == @product.user_id || @product.order.present?
+        redirect_to root_path
+      end
+    else
+      redirect_to new_user_session_path
     end
-
   end
 
   def new
