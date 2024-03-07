@@ -2,6 +2,7 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index,:show]
   before_action :set_product, only: [:show, :edit, :update, :move_to_index, :destroy]
   before_action :require_same_user, only: [:edit, :destroy]
+  
 
 
   def index 
@@ -25,6 +26,9 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    if @product.user_id != current_user.id || @product.order != nil #　コードを追加
+      redirect_to root_path
+    end
   end
 
   def update
@@ -46,21 +50,33 @@ class ProductsController < ApplicationController
     end
   end
 
+
+
+
   private
 
   def product_params
-    params.require(:product).permit(:name, :description, :image,:category_id ,:condition_id,:shippingfee_id,:prefecture_id,:scheduleddelivery_id,:price).merge(user_id: current_user.id,)
+    params.require(:product).permit(:name, :description, :image,:category_id ,:condition_id,:shippingfee_id,:prefecture_id,:scheduleddelivery_id,:price).merge(user_id: current_user.id)
   end
+
 
   def set_product
     @product = Product.find(params[:id])
   end
 
+  
   def require_same_user
     unless current_user.id == @product.user_id
       redirect_to root_path
     end
   end
+
+  def sold_edit
+    if @product.order.present?
+      redirect_to root_path
+    end
+  end
+
  
 
 end
