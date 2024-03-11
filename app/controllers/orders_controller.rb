@@ -22,13 +22,14 @@ class OrdersController < ApplicationController
 
   def create
     @shipping_address= ShippingAddress.new(order_params)
-     
     if @shipping_address.valid?
       pay_item
       @shipping_address.save
       redirect_to root_path
     else
-      render :index
+      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+      render :index, status: :unprocessable_entity
+
     end    
   end
 
